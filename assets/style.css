@@ -94,9 +94,9 @@ body {
 }
 
 .gallery {
-  /* display: none; */
-  opacity: 0;
-  transition: opacity 5s;
+  display: none;
+  /* opacity: 0;
+  transition: opacity 5s; */
 }
 
 .title {
