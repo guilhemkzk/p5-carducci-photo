@@ -133,7 +133,7 @@ async function displayAllTags(location) {
       .map(
         (tagsCollectionArray) => `
   <li class="nav-item active">
-  <span class="nav-link"  data-images-toggle="${tagsCollectionArray}">${tagsCollectionArray}</span></li>`
+  <span class="nav-link"  tag="${tagsCollectionArray}">${tagsCollectionArray}</span></li>`
       )
       .join("") +
     "</ul>";
@@ -154,3 +154,85 @@ async function displayAllTags(location) {
 displayAllTags(galleryContainer);
 
 // #endregion
+
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+// #region ------------------------------ ADD TAGS LISTENERS ------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+
+// Get the elements where the buttons are created just before and sent to HTML
+let filterBtns = document.getElementsByClassName("nav-link");
+
+// console.log(filterBtns[1].attributes.tag.nodeValue);
+
+//EVENTS LISTENERS FOR CATEGORIES BUTTONS AND LOAD WORKS BY CATEGORIES
+for (let i = 0; i < filterBtns.length; i++) {
+  //For each categorie
+
+  filterBtns.item(i).addEventListener("click", function () {
+    //Create an event listener for each button
+
+    console.log(filterBtns[i].attributes.tag.nodeValue);
+    // filterByTag(filterBtns[i]);
+  });
+}
+
+async function tagsListeners() {}
+
+//     // CREATING THE EVENT LISTENER FOR THE ALREADY EXISTING ALL BUTTON
+//     // Get the button from the html
+//     let allBtn = document.getElementById("btn-all");
+
+//     // Autofocus on the ALL button
+//     allBtn.focus();
+//     allBtn.style.outline = "none";
+
+//     //EVENT LISTENER FOR ALL BUTTON AND LOAD ALL WORKS
+//     allBtn.addEventListener("click", function () {
+//       //call function that get and display all works in the gallery, erasing what was before
+//       getWorks(gallery);
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
+// getCategories(filterDiv);
+
+// #endregion
+
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+// #region ------------------------------ ADD IMAGE LISTENERS ------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+
+// Get the elements where the buttons are created just before and sent to HTML
+let galleryItems = document.getElementsByClassName("gallery-item");
+
+// console.log(filterBtns[1].attributes.tag.nodeValue);
+
+//EVENTS LISTENERS FOR CATEGORIES BUTTONS AND LOAD WORKS BY CATEGORIES
+for (let i = 0; i < galleryItems.length; i++) {
+  //For each categorie
+
+  galleryItems.item(i).addEventListener("click", function () {
+    //Create an event listener for each button
+
+    console.log("Modale");
+    // filterByTag(filterBtns[i]);
+  });
+}
+
+async function tagsListeners() {}
+
+// #endregion
+
+// Function to add the img-fluid class to all IMG on the page
+async function makeImagesResponsive(element) {
+  if (element.getAttribute("tagName") === "IMG") {
+    // si la propriété de l'élément ayant pour clé tagName est égale à IMG
+    element.addClass("img-fluid"); // ajouter à l'élément une classe = img-fluid
+  }
+}
