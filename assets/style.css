@@ -248,6 +248,10 @@ input[type="submit"] {
   padding: 0.5em 1em;
 }
 
+.modal {
+  display: none;
+}
+
 @media all and (max-width: 1180px) {
   .picture {
     flex: 2;

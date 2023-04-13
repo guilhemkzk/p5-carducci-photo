@@ -12,11 +12,13 @@
     return this.each(function () {
       // 1. Méthode createRowWrappers de mauGallery sur l'élément this (chaque élément ?) :
       // Méthode qui créé la div qui contient les rows comme élément enfant de this
+      // &&&&&&&&&&&&&&&&&&&&&&&&&&& OK &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
       $.fn.mauGallery.methods.createRowWrapper($(this));
       // 2. Si la var lightBow des options existe (= est True), alors utilise la méthode createLightBox
       if (options.lightBox) {
         // Utilise la méthode de mauGallery createLightBox sur (this = cet élément), avec comme valeurs d'entrée le lightboxId et la var navigation (
         // renseignées dans les paramètres en entrée quand on appelle mauGallery)
+        // &&&&&&&&&&&&&&&&&&&&&&&&&&& OK &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
         $.fn.mauGallery.methods.createLightBox(
           $(this),
           options.lightboxId,
@@ -32,12 +34,15 @@
         .each(function (index) {
           // Pour chaque item de la gallerie
           // Appelle la méthode responsivleImageItem ==> on fait de chaque élément une image responsive ?
+          // &&&&&&&&&&&&&&&&&&&&&&&&&&& OK &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
           $.fn.mauGallery.methods.responsiveImageItem($(this));
           // Appelle la méthode moveItemInRowWrapper ==> on wrappe les itemps en un certain nombre de lignes
+          // &&&&&&&&&&&&&&&&&&&&&&&&&&& OK &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
           $.fn.mauGallery.methods.moveItemInRowWrapper($(this));
           // Appelle la méthode wrapItemInColumn , avec en paramètre supplémentaire la variable
           // column (le nombre de colonnes) donnée en entrée de la fonction mauGallery dans l'objet options.
           // ==> On wrappe les items en un certain nombre de colonnes définit manuellement dans les options de la fonction par l'user
+          // &&&&&&&&&&&&&&&&&&&&&&&&&&& OK &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
           $.fn.mauGallery.methods.wrapItemInColumn($(this), options.columns);
 
           // Définit la variable theTag comme la valeur contenue dans la variable "this" sous la clé "gallery-tag"
@@ -51,7 +56,7 @@
           //$( elem ).data(); // { foo: 42 }
 
           var theTag = $(this).data("gallery-tag");
-
+          // &&&&&&&&&&&&&&&&&&&&&&&&&&& OK &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
           if (
             options.showTags && // SI la valeur showTags contenue dans les options est true (= si on veut montrer la gallerie)
             theTag !== undefined && // ET QUE theTag n'est pas indéfinie
@@ -64,7 +69,7 @@
             tagsCollection.push(theTag); // On ajoute theTags à la variable tagsCollection
           }
         });
-
+      // &&&&&&&&&&&&&&&&&&&&&&&&&&& OK &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
       // Si la showTags de options (définie par l'user) est true
       if (options.showTags) {
         $.fn.mauGallery.methods.showItemTags(
@@ -219,6 +224,7 @@
 
     // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
     // Méthode move Item In Row Wrapper ==> sert juste à rajouter un élément enfant à la div gallery-items-row
+    // CA AJOUTE LES IMAGES A GALLERY ITEM ROW !!!!
     moveItemInRowWrapper(element) {
       // Prend en paramètre d'entrée un element
       element.appendTo(".gallery-items-row"); // On rajoute l'élément element comme enfant au noeud HTML ayant pour classe .gallery-items-row

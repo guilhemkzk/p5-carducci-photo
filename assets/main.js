@@ -1,6 +1,15 @@
+// DEFAULT INPUTS
+
+let columns = 3;
+let lightBox = true;
+let lightboxId = null;
+let showTags = true;
+let tagsPosition = "bottom";
+let navigation = true;
+
 //INPUTS
 
-let columns = {
+columns = {
   xs: 1,
   sm: 2,
   md: 3,
@@ -8,19 +17,31 @@ let columns = {
   xl: 3,
 };
 
-let lightBox = true;
-let lightboxId = "myAwesomeLightbox";
-let showTags = true;
-let tagsPosition = "top";
+lightBox = true;
+lightboxId = "myAwesomeLightbox";
+showTags = true;
+tagsPosition = "top";
+
+//GENERAL VARIABLES
+
+// Get the container of the gallery of works
+let galleryContainer = document.getElementById("gallery-container");
+
+// Get a variable with all the images (HTML Collection)
+let imagesInGallery = document.getElementsByClassName("gallery-item");
+
+// Get the elements where the buttons are created just before and sent to HTML
+let filterBtns = document.getElementsByClassName("nav-link");
+
+// Get the direct div parent that contains all the gallery images
+let smallGalleryContainer =
+  document.getElementsByClassName("gallery-items-row");
 
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
 // #region --------------------------POPULATE GALLERY WITH IMAGES -------------------------- //
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
-
-// Get the container of the gallery of works
-let galleryContainer = document.getElementById("gallery-container");
 
 // General function to display the gallery
 async function displayGallery(location) {
@@ -83,6 +104,22 @@ async function addBootstrapClasses(location, columns) {
 
 displayGallery(galleryContainer);
 addBootstrapClasses(galleryContainer, columns);
+
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// Quel intérêt ?
+
+//Add the bootstrap responsive class to all the pictures
+for (let i = 0; i < imagesInGallery.length; i++) {
+  //For each categorie
+  if (imagesInGallery.item(i).nodeName === "IMG") {
+    // si la propriété de l'élément ayant pour clé tagName est égale à IMG
+    imagesInGallery.item(i).classList.add("img-fluid"); // ajouter à l'élément une classe = img-fluid
+  }
+}
 
 // #endregion
 
@@ -161,8 +198,21 @@ displayAllTags(galleryContainer);
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
 
-// Get the elements where the buttons are created just before and sent to HTML
-let filterBtns = document.getElementsByClassName("nav-link");
+// Function to hide elements
+async function hide(elements) {
+  elements = elements.length ? elements : [elements];
+  for (var index = 0; index < elements.length; index++) {
+    elements[index].style.display = "none";
+  }
+}
+
+// Function to display elements
+async function unhide(elements) {
+  elements = elements.length ? elements : [elements];
+  for (var index = 0; index < elements.length; index++) {
+    elements[index].style.display = "flex";
+  }
+}
 
 // console.log(filterBtns[1].attributes.tag.nodeValue);
 
@@ -171,34 +221,74 @@ for (let i = 0; i < filterBtns.length; i++) {
   //For each categorie
 
   filterBtns.item(i).addEventListener("click", function () {
-    //Create an event listener for each button
+    // Get the tag of the button clicked
+    let selectedTag = filterBtns[i].attributes.tag.nodeValue;
 
-    console.log(filterBtns[i].attributes.tag.nodeValue);
-    // filterByTag(filterBtns[i]);
+    // Filter the tags
+    filterImages(selectedTag);
   });
 }
 
-async function tagsListeners() {}
+async function filterImages(selectedTag) {
+  // Get a variable with all the images (HTML Collection) and convert it to an array
+  let imagesInGallery = document.getElementsByClassName("gallery-item");
+  let imagesInGalleryArray = [];
 
-//     // CREATING THE EVENT LISTENER FOR THE ALREADY EXISTING ALL BUTTON
-//     // Get the button from the html
-//     let allBtn = document.getElementById("btn-all");
+  // Loop in the imagesInGallery to hide the ones that does not match the tag
+  // For each item in the HTML collection, check if the tag correspond to the
+  // selected one => if so, display it ; if not, hide it.
+  for (let item of imagesInGallery) {
+    if (selectedTag !== "Tous") {
+      if (item.attributes.tag.nodeValue == selectedTag) {
+        item.style.display = "flex"; // if the tag matches, then display
+      } else if (item.attributes.tag.nodeValue !== selectedTag) {
+        item.style.display = "none"; // if the tag matches, then display
+      }
+    } else {
+      item.style.display = "flex";
+    }
+  }
+}
 
-//     // Autofocus on the ALL button
-//     allBtn.focus();
-//     allBtn.style.outline = "none";
+// #endregion
 
-//     //EVENT LISTENER FOR ALL BUTTON AND LOAD ALL WORKS
-//     allBtn.addEventListener("click", function () {
-//       //call function that get and display all works in the gallery, erasing what was before
-//       getWorks(gallery);
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+// #region ------------------------------ CREATE LIGHTBOX ------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
 
-// getCategories(filterDiv);
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// Create Light Box
+// Create and insert all the div containing the lightBox, hidden by default
+async function createLightBox(location, lightboxId, navigation) {
+  let modaleCorps = `<div class="modal fade" id="${
+    lightboxId ? lightboxId : "galleryLightbox"
+  } " tabindex="-1" role="dialog">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            ${
+              navigation
+                ? '<div class="mg-prev" style="cursor:pointer;position:absolute;top:50%;left:-15px;background:white;"><</div>'
+                : '<span style="display:none;" />'
+            }
+            <img class="lightboxImage img-fluid" alt="Contenu de l'image affichée dans la modale au clique"/>
+            ${
+              navigation
+                ? '<div class="mg-next" style="cursor:pointer;position:absolute;top:50%;right:-15px;background:white;}">></div>'
+                : '<span style="display:none;" />'
+            }
+        </div>
+    </div>
+</div>
+</div>`;
+
+  location.insertAdjacentHTML("afterbegin", modaleCorps);
+}
+
+createLightBox(galleryContainer, lightboxId, navigation);
 
 // #endregion
 
@@ -217,22 +307,29 @@ let galleryItems = document.getElementsByClassName("gallery-item");
 for (let i = 0; i < galleryItems.length; i++) {
   //For each categorie
 
-  galleryItems.item(i).addEventListener("click", function () {
+  galleryItems.item(i).addEventListener("click", function (element) {
     //Create an event listener for each button
-
-    console.log("Modale");
-    // filterByTag(filterBtns[i]);
+    openLightBox(element.currentTarget, lightboxId);
   });
 }
 
-async function tagsListeners() {}
-
 // #endregion
 
-// Function to add the img-fluid class to all IMG on the page
-async function makeImagesResponsive(element) {
-  if (element.getAttribute("tagName") === "IMG") {
-    // si la propriété de l'élément ayant pour clé tagName est égale à IMG
-    element.addClass("img-fluid"); // ajouter à l'élément une classe = img-fluid
-  }
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+// #region ------------------------------ OPEN LIGHTBOX ------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+
+async function openLightBox(element, lightboxId) {
+  // Get the lightBox HTML node
+  let lightBox = document.getElementById(lightboxId);
+
+  // Add the src element of the lightBox as the src attribute of the selected image
+  lightBox.src = element.src;
+
+  // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  lightBox.modal("toggle");
 }
+// #endregion
