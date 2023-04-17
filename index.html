@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./assets/bootstrap/bootstrap.css" />
-    <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -11,13 +11,32 @@
       rel="stylesheet"
     />
     <meta charset="UTF-8" />
-    <script src="./assets/bootstrap/bootstrap.bundle.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="./assets/bootstrap/bootstrap.bundle.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"
-    ></script>
-    <script type="text/javascript" src="./assets/main.js" defer></script>
+    ></script> -->
+    <script type="text/javascript" src="./js/lightbox.js" defer></script>
+    <script type="text/javascript" src="./js/gallery.js" defer></script>
+    <script type="text/javascript" src="./js/main.js" defer></script>
   </head>
   <body>
     <div class="top-header">
@@ -135,56 +154,71 @@
         </p>
       </div>
     </div>
+    <!-- Modale Template - default display : none -->
+
+    <div class="modal" id="galleryLightbox" tabindex="-1" role="dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <!--<span /> -->
+          <div class="mg-prev"><span>&lt;</span></div>
+          <img
+            class="lightboxImage img-fluid"
+            alt="Contenu de l'image affichée dans la modale au clic"
+          />
+          <!--<span /> -->
+          <div class="mg-next"><span>&gt;</span></div>
+        </div>
+      </div>
+    </div>
+
     <div id="gallery">
       <h3 class="title">Portfolio</h3>
       <div class="container py-3">
-        <!-- Style display ne devrait pas être dans le HTML-->
         <div class="gallery" id="gallery-container">
           <img
-            tag="Concert"
-            class="gallery-item"
+            data-tag="Concert"
+            class="gallery-item img-fluid"
             src="./assets/images/gallery/concerts/aaron-paul-wnX-fXzB6Cw-unsplash.jpg"
           />
-          <!-- Deux fois Entreprises deux tags avec le même nom -->
           <img
-            tag="Entreprises"
-            class="gallery-item"
+            data-tag="Entreprises"
+            class="gallery-item img-fluid"
             src="./assets/images/gallery/entreprise/ali-morshedlou-WMD64tMfc4k-unsplash.jpg"
           />
           <img
-            tag="Entreprises"
-            class="gallery-item"
+            data-tag="Entreprises"
+            class="gallery-item img-fluid"
             src="./assets/images/gallery/entreprise/jason-goodman-tHO1_OuKbg0-unsplash.jpg"
           />
           <img
-            tag="Mariages"
-            class="gallery-item"
+            data-tag="Mariages"
+            class="gallery-item img-fluid"
             src="./assets/images/gallery/mariage/hannah-busing-RvF2R_qMpRk-unsplash.jpg"
           />
           <img
-            tag="Portrait"
-            class="gallery-item"
+            data-tag="Portrait"
+            class="gallery-item img-fluid"
             src="./assets/images/gallery/portraits/ade-tunji-rVkhWWZFAtQ-unsplash.jpg"
           />
           <img
-            tag="Mariages"
-            class="gallery-item"
+            data-tag="Mariages"
+            class="gallery-item img-fluid"
             src="./assets/images/gallery/mariage/jakob-owens-SiniLJkXhMc-unsplash.jpg"
           />
           <img
-            tag="Portrait"
-            class="gallery-item"
+            data-tag="Portrait"
+            class="gallery-item img-fluid"
             src="./assets/images/gallery/portraits/nino-van-prattenburg--443cl1uR_8-unsplash.jpg"
           />
           <img
-            tag="Concert"
-            class="gallery-item"
+            data-tag="Concert"
+            class="gallery-item img-fluid"
             src="./assets/images/gallery/concerts/austin-neill-hgO1wFPXl3I-unsplash.jpg"
           />
           <!-- Encore un Entreprises  tags avec le même nom -->
           <img
-            tag="Entreprises"
-            class="gallery-item"
+            data-tag="Entreprises"
+            class="gallery-item img-fluid"
             src="./assets/images/gallery/entreprise/mateus-campos-felipe-Fsgzm8N0hIY-unsplash.jpg"
           />
         </div>
