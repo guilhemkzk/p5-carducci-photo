@@ -10,7 +10,7 @@ body {
   background-color: white;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   padding-inline: 100px;
@@ -241,7 +241,7 @@ input[type="submit"] {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 10; /* Sit on top */
+  z-index: 101; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -253,9 +253,9 @@ input[type="submit"] {
 
 .modal-content {
   background-color: #ffffff;
-  width: 40%;
+  width: 30%;
   height: fit-content;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 5% auto; /* 15% from the top and centered */
   border-radius: 2px;
   display: flex;
   flex-direction: column;

@@ -27,7 +27,11 @@ async function openLightBox(element, lightboxId, navigation) {
   // Add the src element of the lightBox as the src attribute of the selected image
   imageInModal.src = element.src;
 
+  //Display the modal
   lightBox.style.display = "flex";
+
+  //Block the scrolling when the modal is open
+  document.body.style.overflowY = "hidden";
 }
 // #endregion
 
@@ -36,5 +40,7 @@ window.onclick = function (event) {
   let modal = document.querySelector(".modal");
   if (event.target == modal) {
     modal.style.display = "none";
+    //Unblock the scrolling when the modal is closed
+    document.body.style.overflowY = "auto";
   }
 };
