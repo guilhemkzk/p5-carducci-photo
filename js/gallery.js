@@ -160,11 +160,14 @@ async function addFilteringFunction(filterBtns) {
 // #region ------------------------- FUNCTION TO FILTER GALLERY ---------------------------- //
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
+var activeTag = "Tous";
 
 async function filterImages(selectedTag) {
   // Get a variable with all the images (HTML Collection) and convert it to an array
   let individualsImagesContainers =
     document.getElementsByClassName("item-column");
+
+  activeTag = selectedTag;
 
   // Loop in the imagesInGallery to hide the ones that does not match the tag
   // For each item in the HTML collection, check if the tag correspond to the
@@ -197,6 +200,7 @@ async function addListenerLightBox(galleryItems) {
 
     galleryItems.item(i).addEventListener("click", function (element) {
       //Create an event listener for each button (function from lightbox.js)
+
       openLightBox(element.currentTarget, lightboxId, navigation);
     });
   }
