@@ -34,9 +34,12 @@ document
 // Get a variable with all the images (HTML Collection) and convert it to an array
 var allImagesInGallery = document.getElementsByClassName("gallery-item");
 var allImagesGalleryArray = [];
+var allTagsGalleryArray = [];
 
 for (let i = 0; i < allImagesInGallery.length; i++) {
   allImagesGalleryArray[i] = allImagesInGallery[i].outerHTML;
+  // List of the tags for each image regarding their position in the gallery
+  allTagsGalleryArray[i] = allImagesInGallery[i].outerHTML.split('"')[1];
 }
 
 // #endregion
@@ -105,18 +108,33 @@ async function goToNextImage(element) {
   // Get the position of the current image
   let currentPosition = await getImagePosition(allImagesGalleryArray, element);
 
-  // Add + 1 to get to the next image
-  let nextPosition = currentPosition + 1;
+  // IF THIS IS THE LAST IMAGE, THEN DO NOTHING
 
-  // Check if this is the last image of the gallery
-  if (nextPosition + 1 > allImagesGalleryArray.length) {
-    nextPosition--;
+  if (currentPosition == allImagesGalleryArray.length) {
+    return;
+  } else {
+    let nextPosition = currentPosition;
+
+    if (activeTag == "Tous") {
+      // Add + 1 to get to the next image
+      nextPosition = currentPosition + 1;
+
+      // Check if this is the last image of the gallery
+      if (nextPosition + 1 > allImagesGalleryArray.length) {
+        nextPosition--;
+      }
+    } else {
+      for (j = currentPosition + 1; j < allImagesGalleryArray.length; j++) {
+        if (allTagsGalleryArray[j] == activeTag) {
+          nextPosition = j;
+          break;
+        }
+      }
+    }
+
+    //Call the open modal function with the next image
+    openLightBox(allImagesInGallery.item(nextPosition), lightboxId, navigation);
   }
-
-  //Call the open modal function with the next image
-  openLightBox(allImagesInGallery.item(nextPosition), lightboxId, navigation);
-
-  // Get the active tag if there is a filter
 }
 
 // FUNCTION TO GO TO THE PREV IMAGE
@@ -124,16 +142,33 @@ async function goToPrevImage(element) {
   // Get the position of the current image
   let currentPosition = await getImagePosition(allImagesGalleryArray, element);
 
-  // Add + 1 to get to the next image
-  let prevPosition = currentPosition - 1;
+  // IF THIS IS THE FIRST IMAGE, THEN DO NOTHING
 
-  // Check if this is the last image of the gallery
-  if (prevPosition < 0) {
-    prevPosition++;
+  if (currentPosition == 0) {
+    return;
+  } else {
+    let prevPosition = currentPosition;
+
+    if (activeTag == "Tous") {
+      // Add + 1 to get to the next image
+      prevPosition = currentPosition - 1;
+
+      // Check if this is the last image of the gallery
+      if (prevPosition < 0) {
+        prevPosition++;
+      }
+    } else {
+      for (j = currentPosition - 1; j > 0; j--) {
+        if (allTagsGalleryArray[j] == activeTag) {
+          prevPosition = j;
+          break;
+        }
+      }
+    }
+
+    //Call the open modal function with the next image
+    openLightBox(allImagesInGallery.item(prevPosition), lightboxId, navigation);
   }
-
-  //Call the open modal function with the next image
-  openLightBox(allImagesInGallery.item(prevPosition), lightboxId, navigation);
 }
 
 // #endregion
