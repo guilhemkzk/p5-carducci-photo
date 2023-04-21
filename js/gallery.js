@@ -112,7 +112,7 @@ async function displayAllTags(location) {
       .map(
         (tagsCollectionArray) => `
     <li class="nav-item active">
-    <span class="nav-link"  data-tag="${tagsCollectionArray}">${tagsCollectionArray}</span></li>`
+    <span class="nav-link" data-tag="${tagsCollectionArray}">${tagsCollectionArray}</span></li>`
       )
       .join("") +
     "</ul>";

@@ -34,6 +34,7 @@ let imagesInGallery = document.getElementsByClassName("gallery-item");
 // Get the elements where the buttons are created just before and sent to HTML
 let filterBtns = document.getElementsByClassName("nav-link");
 
+// A VIRER
 // Get the direct div parent that contains all the gallery images
 let smallGalleryContainer =
   document.getElementsByClassName("gallery-items-row");

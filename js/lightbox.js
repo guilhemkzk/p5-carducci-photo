@@ -19,14 +19,14 @@ document
   .querySelector(".mg-prev")
   .addEventListener("click", function (element) {
     // Input for the function : the HTML element for the img in the modal
-    goToPrevImage(element.currentTarget.nextElementSibling);
+    goToPrevImage(element.currentTarget.nextElementSibling, activeTag);
   });
 
 document
   .querySelector(".mg-next")
   .addEventListener("click", function (element) {
     // Input for the function : the HTML element for the img in the modal
-    goToNextImage(element.currentTarget.previousElementSibling);
+    goToNextImage(element.currentTarget.previousElementSibling, activeTag);
   });
 
 // GLOBAL VARIABLE WITH THE FULL GALLERY IN ARRAY FORMAT
@@ -36,11 +36,27 @@ var allImagesInGallery = document.getElementsByClassName("gallery-item");
 var allImagesGalleryArray = [];
 var allTagsGalleryArray = [];
 
+// Arr au lieu de Array
+
 for (let i = 0; i < allImagesInGallery.length; i++) {
   allImagesGalleryArray[i] = allImagesInGallery[i].outerHTML;
+
   // List of the tags for each image regarding their position in the gallery
-  allTagsGalleryArray[i] = allImagesInGallery[i].outerHTML.split('"')[1];
+  allTagsGalleryArray[i] = allImagesInGallery[i].dataset.tag;
 }
+
+// A METTRE DANS UN FICHIER A PART (?)
+
+const IMAGE_GALLERY = {
+  allImages: document.getElementsByClassName("gallery-item"),
+  allImagesArr: allImagesGalleryArray,
+  allTags: allTagsGalleryArray, // map
+};
+
+// var arr = Array.prototype.slice.call( htmlCollection )
+
+// FUNCTION ?
+// CONSTANTE ?
 
 // #endregion
 
@@ -104,7 +120,7 @@ async function getImagePosition(array, element) {
 }
 
 // FUNCTION TO GO TO THE NEXT IMAGE
-async function goToNextImage(element) {
+async function goToNextImage(element, tag) {
   // Get the position of the current image
   let currentPosition = await getImagePosition(allImagesGalleryArray, element);
 
@@ -115,7 +131,7 @@ async function goToNextImage(element) {
   } else {
     let nextPosition = currentPosition;
 
-    if (activeTag == "Tous") {
+    if (tag == "Tous") {
       // Add + 1 to get to the next image
       nextPosition = currentPosition + 1;
 
@@ -125,7 +141,7 @@ async function goToNextImage(element) {
       }
     } else {
       for (j = currentPosition + 1; j < allImagesGalleryArray.length; j++) {
-        if (allTagsGalleryArray[j] == activeTag) {
+        if (allTagsGalleryArray[j] == tag) {
           nextPosition = j;
           break;
         }
@@ -138,7 +154,7 @@ async function goToNextImage(element) {
 }
 
 // FUNCTION TO GO TO THE PREV IMAGE
-async function goToPrevImage(element) {
+async function goToPrevImage(element, tag) {
   // Get the position of the current image
   let currentPosition = await getImagePosition(allImagesGalleryArray, element);
 
@@ -147,9 +163,10 @@ async function goToPrevImage(element) {
   if (currentPosition == 0) {
     return;
   } else {
+    console.log(currentPosition);
     let prevPosition = currentPosition;
 
-    if (activeTag == "Tous") {
+    if (tag == "Tous") {
       // Add + 1 to get to the next image
       prevPosition = currentPosition - 1;
 
@@ -158,8 +175,9 @@ async function goToPrevImage(element) {
         prevPosition++;
       }
     } else {
-      for (j = currentPosition - 1; j > 0; j--) {
-        if (allTagsGalleryArray[j] == activeTag) {
+      // A TESTER
+      for (j = currentPosition - 1; j >= 0; j--) {
+        if (allTagsGalleryArray[j] == tag) {
           prevPosition = j;
           break;
         }
