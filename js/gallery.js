@@ -92,8 +92,8 @@ async function displayAllTags(location) {
     }
   }
 
-  //Add the "tous" tag at the begining of the array
-  tagsCollection.unshift("Tous"); // TYPE = OBJECT
+  // //Add the "tous" tag at the begining of the array
+  // tagsCollection.unshift("Tous"); // TYPE = OBJECT
 
   //
   // DISPLAY THE TAGS IN A LIST
@@ -107,11 +107,11 @@ async function displayAllTags(location) {
   }
 
   const returnTagList =
-    '<ul class="my-4 tags-bar nav nav-pills">' +
+    '<ul class="my-4 tags-bar nav nav-pills"><li class="nav-item active"><span class="nav-link active" data-tag="Tous">Tous</span></li>' +
     tagsCollectionArray
       .map(
         (tagsCollectionArray) => `
-    <li class="nav-item active">
+    <li class="nav-item">
     <span class="nav-link" data-tag="${tagsCollectionArray}">${tagsCollectionArray}</span></li>`
       )
       .join("") +
@@ -160,14 +160,19 @@ async function addFilteringFunction(filterBtns) {
 // #region ------------------------- FUNCTION TO FILTER GALLERY ---------------------------- //
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
-var activeTag = "Tous";
 
 async function filterImages(selectedTag) {
   // Get a variable with all the images (HTML Collection) and convert it to an array
   let individualsImagesContainers =
     document.getElementsByClassName("item-column");
 
-  activeTag = selectedTag;
+  // Get all the tags and remove all previous active classes
+  document.querySelector(".nav-link.active").classList.remove("active");
+
+  // Get the present tag and add the active class to it
+  document
+    .querySelector(`span[data-tag="${selectedTag}"]`)
+    .classList.add("active");
 
   // Loop in the imagesInGallery to hide the ones that does not match the tag
   // For each item in the HTML collection, check if the tag correspond to the
@@ -189,6 +194,18 @@ async function filterImages(selectedTag) {
 
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
+// #region ------------------------------ GET ACTIVE TAG ------------------------------ //
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+
+function getActiveTag() {
+  return document.querySelector(".nav-link.active").dataset.tag;
+}
+
+// #endregion
+
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
 // #region ------------------------------ ADD IMAGE LISTENERS ------------------------------ //
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
@@ -201,7 +218,12 @@ async function addListenerLightBox(galleryItems) {
     galleryItems.item(i).addEventListener("click", function (element) {
       //Create an event listener for each button (function from lightbox.js)
 
-      openLightBox(element.currentTarget, lightboxId, navigation);
+      openLightBox(
+        element.currentTarget,
+        lightboxId,
+        navigation,
+        IMAGE_GALLERY
+      );
     });
   }
 }
