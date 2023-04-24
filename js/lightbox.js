@@ -6,21 +6,58 @@
 
 // GENERAL CONSTANT WITH THE FULL GALLERY IN HTML COLLECTION, ARRAY, AND TAG-ARRAY FORMATS
 
+// Get uniques values on an array
+function onlyUnique(value, index, array) {
+  return array.indexOf(value) === index;
+}
+
 function calcConstants() {
   // Get a variable with all the images (HTML Collection) and convert it to an array
   let allImagesInGallery = document.getElementsByClassName("gallery-item");
   let allImagesGalleryArray = Array.prototype.slice.call(allImagesInGallery);
+  let allTagsGalleryArray = allImagesGalleryArray.map(
+    (allImagesGalleryArray) => allImagesGalleryArray.dataset.tag
+  );
+
+  let uniquesTags = allTagsGalleryArray.filter(onlyUnique);
+
+  const findFirstLast = (array, tag) => {
+    return {
+      first: array.indexOf(tag),
+      last: array.lastIndexOf(tag),
+    };
+  };
+
+  // Create an object that will contain the first and last occurences of
+  // each Tag iot remove navigation arraw in the modal for the first
+  // and the last images of each kind
+  let positions = {};
+
+  for (let i = 0; i < uniquesTags.length; i++) {
+    positions[uniquesTags[i]] = findFirstLast(
+      allTagsGalleryArray,
+      uniquesTags[i]
+    );
+  }
+
+  positions["Tous"] = {
+    first: 0,
+    last: allImagesGalleryArray.length,
+  };
 
   return {
     allImages: allImagesInGallery, //HTML Collection
     allImagesArr: allImagesGalleryArray, // ARRAY
-    allTags: allImagesGalleryArray.map(
-      (allImagesGalleryArray) => allImagesGalleryArray.dataset.tag
-    ), // ARRAY WITH POSITIONS
+    allTags: allTagsGalleryArray, // ARRAY WITH POSITIONS
+    tagsFirstLast: positions,
   };
 }
 
 const IMAGE_GALLERY = calcConstants();
+
+//console.log(IMAGE_GALLERY["tagsFirstLast"][test]);
+
+// console.log(IMAGE_GALLERY.tagsFirstLast.Concert.first);
 
 // When the user clicks anywhere outside of the modals, close it
 window.onclick = function (event) {
@@ -118,15 +155,16 @@ async function getArrowsCorrectDisplay(navigation, element, IMAGE_GALLERY) {
   }
   // THEN IF the active tag is TOUS
   // AND it is the last of the first image, remove one of the arrows
+  // Using the values from const IMAGE_GALLERY.tagFirstLast
+  // That hold the index of each first and last image for each tag
 
   let activeTag = getActiveTag();
 
-  if (activeTag == "Tous" && imagePosition == 0) {
+  if (imagePosition == IMAGE_GALLERY["tagsFirstLast"][activeTag]["first"]) {
     // First image => remove the left (prev) arrow
     prevArrow.style.display = "none";
   } else if (
-    activeTag == "Tous" &&
-    imagePosition == IMAGE_GALLERY.allImagesArr.length - 1
+    imagePosition == IMAGE_GALLERY["tagsFirstLast"][activeTag]["last"]
   ) {
     // Last image => remove the right arrow
     nextArrow.style.display = "none";
