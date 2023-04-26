@@ -8,7 +8,6 @@
 async function displayGallery(location) {
   // Display gallery
   location.style.display = "grid";
-  // location.style.opacity = "1"; // Effet fade in via CSS sur 5 secondes
 }
 
 // General function to add the Bootstrap classes to the images
@@ -44,15 +43,13 @@ async function addBootstrapClasses(location, columns) {
 
     // Add the <div> around
     const returnImages =
-      '<div class="gallery-items-row row">' +
       imagesInGalleryArray
         .map(
           (imagesInGalleryArray) => `
   
                   <div class='item-column mb-4${columnClasses}'>${imagesInGalleryArray}</div>`
         )
-        .join("") +
-      "</div>";
+        .join("") + "</div>";
 
     // Send the content written in the HTML page (errasing what was written previously)
     location.innerHTML = returnImages;
@@ -91,9 +88,6 @@ async function displayAllTags(location) {
       counter++;
     }
   }
-
-  // //Add the "tous" tag at the begining of the array
-  // tagsCollection.unshift("Tous"); // TYPE = OBJECT
 
   //
   // DISPLAY THE TAGS IN A LIST
@@ -166,6 +160,12 @@ async function filterImages(selectedTag) {
   let individualsImagesContainers =
     document.getElementsByClassName("item-column");
 
+  // Get the smaller containter of the images iot start the animation again
+  let imagesContainer = document.getElementsByClassName("gallery-items-row");
+  console.log(imagesContainer);
+  imagesContainer[0].classList.remove("gallery-animate");
+  console.log(imagesContainer);
+
   // Get all the tags and remove all previous active classes
   document.querySelector(".nav-link.active").classList.remove("active");
 
@@ -188,6 +188,8 @@ async function filterImages(selectedTag) {
       item.style.display = "flex";
     }
   }
+
+  imagesContainer[0].classList.add("gallery-animate");
 }
 
 // #endregion

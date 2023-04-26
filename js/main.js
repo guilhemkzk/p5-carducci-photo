@@ -25,8 +25,12 @@ tagsPosition = "top";
 
 //GENERAL VARIABLES
 
-// Get the container of the gallery of works
+// Get the big container of the gallery of works
 let galleryContainer = document.getElementById("gallery-container");
+
+// Get the container for JUST the images
+let rowGalleryContainer =
+  document.getElementsByClassName("gallery-items-row")[0];
 
 // Get a variable with all the images (HTML Collection)
 let imagesInGallery = document.getElementsByClassName("gallery-item");
@@ -43,7 +47,7 @@ let smallGalleryContainer =
 displayGallery(galleryContainer);
 
 // ADD THE BOOTSRAP CLASSES SO THAT THE GALLERY IS RESPONSIVE (function from gallery.js)
-addBootstrapClasses(galleryContainer, columns);
+addBootstrapClasses(rowGalleryContainer, columns);
 
 // DISPLAY THE TAGS FOR FILTERING THE GALLERY (function from gallery.js)
 displayAllTags(galleryContainer);

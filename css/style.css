@@ -89,12 +89,7 @@ body {
   font-size: 14px;
 }
 
-#gallery {
-  /*	min-height: 100vh; */
-}
-
-.gallery {
-  /* display: none; */
+.gallery-animate {
   width: 0;
   height: 0;
   animation-name: expand;
