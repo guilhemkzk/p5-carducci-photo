@@ -128,6 +128,24 @@ async function displayAllTags(location) {
 
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
+// #region ---------------------------- MANAGEMENT OF ANIMATION ---------------------------- //
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
+
+async function removeAnimation(container) {
+  // If the div already contains the class gallery-animate
+  if (container.classList.value.includes("gallery-animate")) {
+    // Remove it
+    container.classList.remove("gallery-animate");
+  }
+}
+async function launchAnimation(container) {
+  container.classList.add("gallery-animate");
+}
+// #endregion
+
+// ----------------------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------------------- //
 // #region ------------------------------ ADD TAGS LISTENERS ------------------------------- //
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
@@ -141,6 +159,8 @@ async function addFilteringFunction(filterBtns) {
       // Get the tag of the button clicked
       let selectedTag = filterBtns[i].dataset.tag;
 
+      // Remove animation class if applicable
+      removeAnimation(document.getElementsByClassName("gallery-items-row")[0]);
       // Filter the tags
       filterImages(selectedTag);
     });
@@ -159,12 +179,6 @@ async function filterImages(selectedTag) {
   // Get a variable with all the images (HTML Collection) and convert it to an array
   let individualsImagesContainers =
     document.getElementsByClassName("item-column");
-
-  // Get the smaller containter of the images iot start the animation again
-  let imagesContainer = document.getElementsByClassName("gallery-items-row");
-  console.log(imagesContainer);
-  imagesContainer[0].classList.remove("gallery-animate");
-  console.log(imagesContainer);
 
   // Get all the tags and remove all previous active classes
   document.querySelector(".nav-link.active").classList.remove("active");
@@ -189,7 +203,8 @@ async function filterImages(selectedTag) {
     }
   }
 
-  imagesContainer[0].classList.add("gallery-animate");
+  // Get the smaller containter of the images iot start the animation again
+  launchAnimation(document.getElementsByClassName("gallery-items-row")[0]);
 }
 
 // #endregion
