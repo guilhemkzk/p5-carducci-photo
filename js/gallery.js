@@ -5,43 +5,53 @@
 // ----------------------------------------------------------------------------------------- //
 
 // General function to display the gallery
-async function displayGallery(location) {
+function displayGallery(location) {
   // Display gallery
   location.style.display = "grid";
 }
 
-// General function to add the Bootstrap classes to the images
-async function addBootstrapClasses(location, columns) {
-  // Replace wrapItemInColumn
-  // ==> add the classes in each image for bootstrap responsive design
+// General function to add the Bootstrap classes to the images for responsive
+function addBootstrapClasses(location, columns) {
+  // Parameters:
+  // location : parent node containing the images
+  // columns : number, in main.js
 
-  // Get a variable with all the images (HTML Collection) and convert it to an array
+  // Get the images as an HTML collection
   let imagesInGallery = document.getElementsByClassName("gallery-item");
+  // Initiate array
   let imagesInGalleryArray = [];
 
+  // Convert the gallery as an array of strings
   for (let i = 0; i < imagesInGallery.length; i++) {
     imagesInGalleryArray[i] = imagesInGallery[i].outerHTML;
   }
 
-  // IF columns is a number ==> should not happen
+  // Build the css classes using the defined value of "number" in main.js
+  // to determine the number of columns for each screen size
+
+  // If columns is a number (by default)
   if (typeof columns === "number" && columns !== null) {
     location.appendChild(
       `<div class='item-column mb-4 col-${Math.ceil(12 / columns)}'></div>`
     );
-    // ELSE IF => should happen
+    // Else, if column is an object (as it should)
   } else if (typeof columns === "object" && columns !== null) {
-    var columnClasses = ""; // Initiate the variable as an empty string
+    // Initiate the variable as an empty string
+    var columnClasses = "";
 
+    // for each key in the object columns
+    // where each key correspond to a given bootstrap size
     for (const key in columns) {
       if (key !== "xs") {
         // Non regular case for xs where {key is not added}
+        // Build the expression with the values in columns
         columnClasses += ` col-${key}-${Math.ceil(12 / columns[key])}`;
       } else if (key == "xs") {
         columnClasses += ` col-${Math.ceil(12 / columns[key])}`;
       }
     }
 
-    // Add the <div> around
+    // Add the <div> around the built expression using map() function
     const returnImages =
       imagesInGalleryArray
         .map(
@@ -51,7 +61,7 @@ async function addBootstrapClasses(location, columns) {
         )
         .join("") + "</div>";
 
-    // Send the content written in the HTML page (errasing what was written previously)
+    // Send the content written in the HTML page
     location.innerHTML = returnImages;
   } else {
     console.error(
@@ -68,38 +78,16 @@ async function addBootstrapClasses(location, columns) {
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
 
-// General function to get all the tags from HTML images
-async function displayAllTags(location) {
-  //
-  // GET THE TAGS FROM THE HTML
-  //
+// General function to display all the tags from HTML images
+function displayAllTags(location, showTags, IMAGE_GALLERY) {
+  // Parameters:
+  // location : parent div where the list of tag will be added
+  // showTags : string, in main.js
 
-  // Initiate the variables
-  let tagsCollection = [];
+  // Get the tag unique values from the constant
+  let tagsCollectionArray = IMAGE_GALLERY.uniqueTags;
 
-  // Get a variable with all the images (HTML Collection)
-  let imagesInGallery = document.getElementsByClassName("gallery-item");
-
-  // Iterate on imagesInGallery to get all the tags
-  let counter = 0;
-  for (let i = 0; i < imagesInGallery.length; i++) {
-    if (!tagsCollection.includes(imagesInGallery[i].dataset.tag)) {
-      tagsCollection[counter] = imagesInGallery[i].dataset.tag;
-      counter++;
-    }
-  }
-
-  //
-  // DISPLAY THE TAGS IN A LIST
-  //
-
-  // Turn tagsCollection to an array
-  let tagsCollectionArray = [];
-
-  for (let i = 0; i < tagsCollection.length; i++) {
-    tagsCollectionArray[i] = tagsCollection[i];
-  }
-
+  // Build the hmtl list of the tags as it will be displayed using map() function
   const returnTagList =
     '<ul class="my-4 tags-bar nav nav-pills"><li class="nav-item active"><span class="nav-link active" data-tag="Tous">Tous</span></li>' +
     tagsCollectionArray
@@ -112,14 +100,16 @@ async function displayAllTags(location) {
     "</ul>";
 
   if (showTags) {
-    // IF the position (defined by user) is BOTTOM, display at the bottom
+    // If the value is "bottom", display at the bottom
     if (tagsPosition === "bottom") {
-      location.insertAdjacentHTML("beforeend", returnTagList); // on ajoute la liste des tags après la gallerie
+      // The list of tags is added after the image gallery
+      location.insertAdjacentHTML("beforeend", returnTagList);
     } else if (tagsPosition === "top") {
-      // IF the position is TOP
-      location.insertAdjacentHTML("afterbegin", returnTagList); // on ajoute la liste des tags avant la gallerie
+      // IF the position is top
+      location.insertAdjacentHTML("afterbegin", returnTagList);
+      // The list of tags is added before the image gallery
     } else {
-      console.error(`Unknown tags position: ${tagsPosition}`); // sinon on renvoie une erreur
+      console.error(`Unknown tags position: ${tagsPosition}`);
     }
   }
 }
@@ -132,14 +122,22 @@ async function displayAllTags(location) {
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
 
-async function removeAnimation(container) {
-  // If the div already contains the class gallery-animate
+// Function to remove the animation class
+function removeAnimation(container) {
+  // If the div already contains the class gallery-animate, then remove it
   if (container.classList.value.includes("gallery-animate")) {
     // Remove it
     container.classList.remove("gallery-animate");
+    // Source : https://www.harrytheo.com/blog/2021/02/restart-a-css-animation-with-javascript/
+    // Void : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/void
+
+    // Trigger the DOM reflow in order to restart animation when the class is added later
+    void container.offsetWidth;
   }
 }
-async function launchAnimation(container) {
+
+// Function to add the animation class
+function launchAnimation(container) {
   container.classList.add("gallery-animate");
 }
 // #endregion
@@ -150,7 +148,8 @@ async function launchAnimation(container) {
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
 
-async function addFilteringFunction(filterBtns) {
+// Function to add the event listeners to eact filter btn
+function addFilteringFunction(filterBtns) {
   //EVENTS LISTENERS FOR CATEGORIES BUTTONS AND LOAD WORKS BY CATEGORIES
   for (let i = 0; i < filterBtns.length; i++) {
     //For each categorie
@@ -175,7 +174,8 @@ async function addFilteringFunction(filterBtns) {
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
 
-async function filterImages(selectedTag) {
+// Function to filter the gallery of images regarding the selected tag
+function filterImages(selectedTag) {
   // Get a variable with all the images (HTML Collection) and convert it to an array
   let individualsImagesContainers =
     document.getElementsByClassName("item-column");
@@ -189,9 +189,9 @@ async function filterImages(selectedTag) {
     .classList.add("active");
 
   // Loop in the imagesInGallery to hide the ones that does not match the tag
-  // For each item in the HTML collection, check if the tag correspond to the
-  // selected one => if so, display it ; if not, hide it.
   for (let item of individualsImagesContainers) {
+    // For each item in the HTML collection, check if the tag correspond to the
+    // selected one => if so, display it ; if not, hide it.
     if (selectedTag !== "Tous") {
       if (item.firstChild.dataset.tag == selectedTag) {
         item.style.display = "flex"; // if the tag matches, then display
@@ -203,20 +203,8 @@ async function filterImages(selectedTag) {
     }
   }
 
-  // Get the smaller containter of the images iot start the animation again
+  // Get the smaller containter of the images to start the animation again
   launchAnimation(document.getElementsByClassName("gallery-items-row")[0]);
-}
-
-// #endregion
-
-// ----------------------------------------------------------------------------------------- //
-// ----------------------------------------------------------------------------------------- //
-// #region ------------------------------ GET ACTIVE TAG ------------------------------ //
-// ----------------------------------------------------------------------------------------- //
-// ----------------------------------------------------------------------------------------- //
-
-function getActiveTag() {
-  return document.querySelector(".nav-link.active").dataset.tag;
 }
 
 // #endregion
@@ -227,13 +215,13 @@ function getActiveTag() {
 // ----------------------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------------------- //
 
-async function addListenerLightBox(galleryItems) {
-  //EVENTS LISTENERS FOR CATEGORIES BUTTONS AND LOAD WORKS BY CATEGORIES
+// Function to add event listener to the images to open the light box
+function addListenerLightBox(galleryItems) {
+  //For each image, add an event listener opening the modal for this image
   for (let i = 0; i < galleryItems.length; i++) {
-    //For each categorie
-
+    //For each item = image
     galleryItems.item(i).addEventListener("click", function (element) {
-      //Create an event listener for each button (function from lightbox.js)
+      // Create an event listener for each image (function is in lightbox.js)
 
       openLightBox(
         element.currentTarget,

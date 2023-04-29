@@ -50,7 +50,7 @@ displayGallery(galleryContainer);
 addBootstrapClasses(rowGalleryContainer, columns);
 
 // DISPLAY THE TAGS FOR FILTERING THE GALLERY (function from gallery.js)
-displayAllTags(galleryContainer);
+displayAllTags(galleryContainer, showTags, IMAGE_GALLERY);
 
 // ADD THE FILTERING LISTENERS (AND FUNCTION) ON THE FILTERING TAGS (function from gallery.js)
 addFilteringFunction(filterBtns);
