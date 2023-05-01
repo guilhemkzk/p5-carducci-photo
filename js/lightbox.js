@@ -136,8 +136,8 @@ async function openLightBox(element, lightboxId, navigation, IMAGE_GALLERY) {
   // Management of the nav arrows
   await getArrowsCorrectDisplay(navigation, element, IMAGE_GALLERY);
 
-  //Change the src to the source of the real image (no thumbnail)
-  let newSrc = element.src.replace("-thumbnail", "");
+  //Change the src of the source to the forlder of the real image (no thumbnail)
+  let newSrc = element.src.replace("/thumbnails", "/images");
 
   // Add the src element of the lightBox as the src attribute of the selected image
   imageInModal.src = newSrc;
@@ -211,7 +211,7 @@ async function getImagePosition(array, element) {
   // array : the array containing all the images of the gallery (from the gen constant)
   // element : the image that position must be found
 
-  // Get the name of the image file (xxxxx.jpg) from the object, as a string
+  // Get the name of the image file (xxxxx.extension) from the object, as a string
   let fileName = element.src.split("/").slice(-1).join("/");
 
   // Initiate a counter
