@@ -222,7 +222,6 @@ function addListenerLightBox(galleryItems) {
     //For each item = image
     galleryItems.item(i).addEventListener("click", function (element) {
       // Create an event listener for each image (function is in lightbox.js)
-
       openLightBox(
         element.currentTarget,
         lightboxId,

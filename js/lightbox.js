@@ -136,8 +136,11 @@ async function openLightBox(element, lightboxId, navigation, IMAGE_GALLERY) {
   // Management of the nav arrows
   await getArrowsCorrectDisplay(navigation, element, IMAGE_GALLERY);
 
+  //Change the src to the source of the real image (no thumbnail)
+  let newSrc = element.src.replace("-thumbnail", "");
+
   // Add the src element of the lightBox as the src attribute of the selected image
-  imageInModal.src = element.src;
+  imageInModal.src = newSrc;
 
   //Display the modal
   lightBox.style.display = "flex";
