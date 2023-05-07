@@ -99,7 +99,7 @@ body {
   width: 0;
   height: 0;
   animation-name: expand;
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
