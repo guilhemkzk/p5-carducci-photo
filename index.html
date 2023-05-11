@@ -6,32 +6,6 @@
       name="description"
       content="Découvrez le monde de la photographie professionnelle avec Nina Carducci. Portraits, évènements, moments de vie ou en entreprise, capturez vos souvenirs avec une qualité professionnelle. Explorez notre collection et faites l'expérience de la beauté et du pouvoir des images."
     />
-    <!-- Rich Snippet Google (???) -->
-    <div itemscope itemtype="http://schema.org/LocalBusiness">
-      <h1 itemprop="name">Nina Carducci - Photographie</h1>
-      <p itemprop="descripton">
-        Photographie professionnelle mariages, évènementiel, portraits, vie.
-      </p>
-      <p>
-        Acceuil téléphonique :
-        <time itemprop="openingHours" datetime="Mo-Fi 09:00-19:00"
-          >Lundi au Vendredi de 9h à 17h</time
-        >
-      </p>
-      <p>
-        Contact:
-        <span itemprop="telephone" content="+33556677889">05 56 67 78 89</span>
-      </p>
-      <address
-        itemscope
-        itemtype="http://schema.org/PostalAddress"
-        itemprop="address"
-      >
-        <span itemprop="streetAddress">68 avenue Alsace-Loraine</span>
-        <span itemprop="addressLocality">BORDEAUX</span>,
-        <span itemprop="postalCode">33200</span>
-      </address>
-    </div>
 
     <!-- Google Authorship and Publisher Markup -->
     <link rel="author" href="https://plus.google.com/nina_carducci/posts" />
@@ -65,7 +39,6 @@
       content="Photographie professionnelle portraits, évènements, vie"
     />
     <meta name="twitter:creator" content="@nina_carducci" />
-    <-- Twitter Summary card images must be at least 200x200px -->
     <meta name="twitter:image" content="./assets/images/nina_200.webp" />
 
     <title>Nina Carducci - Photographie</title>
@@ -82,7 +55,7 @@
     <noscript
       ><link rel="stylesheet" href="./assets/bootstrap/bootstrap_min.css"
     /></noscript>
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/style_min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -98,7 +71,7 @@
     <!--<script type="text/javascript" src="./js/lightbox.js" defer></script>
     <script type="text/javascript" src="./js/gallery.js" defer></script>
     <script type="text/javascript" src="./js/main.js" defer></script>-->
-    <script type="text/javascript" src="./js/scripts.js" defer></script>
+    <script type="text/javascript" src="./js/scripts_min.js" defer></script>
   </head>
   <body>
     <div class="top-header">
@@ -413,6 +386,28 @@
       <div class="container">
         <div class="form-container">
           <h2>Une question ? Une demande de devis ?</h2>
+
+          <!-- Rich Snippet Google -->
+          <div itemscope itemtype="http://schema.org/LocalBusiness">
+            <p>
+              <time itemprop="openingHours" datetime="Mo-Fi 09:00-19:00"
+                >Horaires : Lundi au Vendredi de 9h à 17h</time
+              >
+            </p>
+            <p>
+              <span itemprop="telephone" content="+33556677889"></span>
+              <span> 05 56 67 78 89</span>
+            </p>
+            <address
+              itemscope
+              itemtype="http://schema.org/PostalAddress"
+              itemprop="address"
+            >
+              <span itemprop="streetAddress">68 avenue Alsace-Loraine</span>
+              <span itemprop="addressLocality">BORDEAUX</span>,
+              <span itemprop="postalCode">33200</span>
+            </address>
+          </div>
           <p>
             N’hésitez pas à m’écrire ! Je vous répondrais en moins de 24 heures
           </p>

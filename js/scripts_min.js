@@ -13,90 +13,90 @@ let galleryContainer = document.getElementById("gallery-container"),
   rowGalleryContainer = document.getElementsByClassName("gallery-items-row")[0],
   imagesInGallery = document.getElementsByClassName("gallery-item"),
   filterBtns = document.getElementsByClassName("nav-link");
-function onlyUnique(e, t, l) {
-  return l.indexOf(e) === t;
+function onlyUnique(e, t, a) {
+  return a.indexOf(e) === t;
 }
 function initConstants() {
   let e = document.getElementsByClassName("gallery-item"),
     t = Array.prototype.slice.call(e),
-    l = t.map((e) => e.dataset.tag),
-    a = l.filter(onlyUnique),
+    a = t.map((e) => e.dataset.tag),
+    l = a.filter(onlyUnique),
     s = (e, t) => ({ first: e.indexOf(t), last: e.lastIndexOf(t) }),
     i = {};
-  for (let n = 0; n < a.length; n++) i[a[n]] = s(l, a[n]);
+  for (let n = 0; n < l.length; n++) i[l[n]] = s(a, l[n]);
   return (
     (i.Tous = { first: 0, last: t.length - 1 }),
     {
       allImages: e,
       allImagesArr: t,
-      allTags: l,
+      allTags: a,
       tagsFirstLast: i,
-      uniqueTags: a,
+      uniqueTags: l,
     }
   );
 }
 const IMAGE_GALLERY = initConstants();
-async function openLightBox(e, t, l, a) {
+async function openLightBox(e, t, a, l) {
   let s = document.querySelector(".modal"),
     i = document.querySelector(".modal-content img");
-  null !== t && s.attributes.id, await getArrowsCorrectDisplay(l, e, a);
+  null !== t && s.attributes.id, await getArrowsCorrectDisplay(a, e, l);
   let n = e.src.replace("/thumbnails", "/images");
   (i.src = n),
     (s.style.display = "flex"),
     (document.body.style.overflowY = "hidden");
 }
-async function getArrowsCorrectDisplay(e, t, l) {
-  let a = document.querySelector(".mg-prev"),
+async function getArrowsCorrectDisplay(e, t, a) {
+  let l = document.querySelector(".mg-prev"),
     s = document.querySelector(".mg-next"),
-    i = await getImagePosition(l.allImagesArr, t);
+    i = await getImagePosition(a.allImagesArr, t);
   !0 !== e
-    ? ((a.style.display = "none"), (s.style.display = "none"))
-    : ((a.style.display = "flex"), (s.style.display = "flex"));
+    ? ((l.style.display = "none"), (s.style.display = "none"))
+    : ((l.style.display = "flex"), (s.style.display = "flex"));
   let n = document.querySelector(".nav-link.active").dataset.tag;
-  i == l.tagsFirstLast[n].first && (a.style.display = "none"),
-    i == l.tagsFirstLast[n].last && (s.style.display = "none");
+  i == a.tagsFirstLast[n].first && (l.style.display = "none"),
+    i == a.tagsFirstLast[n].last && (s.style.display = "none");
 }
 async function getImagePosition(e, t) {
-  let l = t.src.split("/").slice(-1).join("/"),
-    a = 0;
-  for (let s = 0; s < e.length && !e[s].src.includes(l); s++) a++;
-  return a;
+  let a = t.src.split("/").slice(-1).join("/"),
+    l = 0;
+  for (let s = 0; s < e.length && !e[s].src.includes(a); s++) l++;
+  return l;
 }
-async function goToNextImage(e, t, l) {
-  let a = await getImagePosition(l.allImagesArr, e),
-    s = a;
-  if ("Tous" == t && s !== l.tagsFirstLast[t].last) s = a + 1;
+async function goToNextImage(e, t, a) {
+  let l = await getImagePosition(a.allImagesArr, e),
+    s = l;
+  if ("Tous" == t && s !== a.tagsFirstLast[t].last) s = l + 1;
   else if ("Tous" !== t) {
-    for (j = a + 1; j < l.allImagesArr.length; j++)
-      if (l.allTags[j] == t) {
+    for (j = l + 1; j < a.allImagesArr.length; j++)
+      if (a.allTags[j] == t) {
         s = j;
         break;
       }
   }
-  openLightBox(l.allImages.item(s), lightboxId, navigation, l);
+  openLightBox(a.allImages.item(s), lightboxId, navigation, a);
 }
-async function goToPrevImage(e, t, l) {
-  let a = await getImagePosition(l.allImagesArr, e);
-  if (0 != a) {
-    let s = a;
-    if ("Tous" == t && s !== l.tagsFirstLast[t].first) s = a - 1;
+async function goToPrevImage(e, t, a) {
+  let l = await getImagePosition(a.allImagesArr, e);
+  if (0 != l) {
+    let s = l;
+    if ("Tous" == t && s !== a.tagsFirstLast[t].first) s = l - 1;
     else if ("Tous" !== t) {
-      for (j = a - 1; j >= 0; j--)
-        if (l.allTags[j] == t) {
+      for (j = l - 1; j >= 0; j--)
+        if (a.allTags[j] == t) {
           s = j;
           break;
         }
     }
-    openLightBox(l.allImages.item(s), lightboxId, navigation, l);
+    openLightBox(a.allImages.item(s), lightboxId, navigation, a);
   }
 }
 function displayGallery(e) {
   e.style.display = "grid";
 }
 function addBootstrapClasses(e, t) {
-  let l = document.getElementsByClassName("gallery-item"),
-    a = [];
-  for (let s = 0; s < l.length; s++) a[s] = l[s].outerHTML;
+  let a = document.getElementsByClassName("gallery-item"),
+    l = [];
+  for (let s = 0; s < a.length; s++) l[s] = a[s].outerHTML;
   if ("number" == typeof t && null !== t)
     e.appendChild(
       `<div class='item-column mb-4 col-${Math.ceil(12 / t)}'></div>`
@@ -108,7 +108,7 @@ function addBootstrapClasses(e, t) {
         ? (i += ` col-${n}-${Math.ceil(12 / t[n])}`)
         : "xs" == n && (i += ` col-${Math.ceil(12 / t[n])}`);
     let o =
-      a
+      l
         .map(
           (e) => `
     
@@ -121,15 +121,17 @@ function addBootstrapClasses(e, t) {
       `Columns should be defined as numbers or objects. ${typeof t} is not supported.`
     );
 }
-function displayAllTags(e, t, l) {
-  let a = l.uniqueTags,
+function displayAllTags(e, t, a) {
+  let l = a.uniqueTags,
     s =
-      '<ul class="my-4 tags-bar nav nav-pills"><li class="nav-item active"><span class="nav-link active" data-tag="Tous">Tous</span></li>' +
-      a
+      '<ul class="my-4 tags-bar nav nav-pills"><li class="nav-item active"><span class="nav-link active" data-tag="Tous" aria-selected="true" tabindex="11">Tous</span></li>' +
+      l
         .map(
-          (e) => `
+          (e, t) => `
       <li class="nav-item">
-      <span class="nav-link" data-tag="${e}">${e}</span></li>`
+      <span class="nav-link" aria-selected="false" tabindex="${
+        t + 11
+      }"data-tag="${e}">${e}</span></li>`
         )
         .join("") +
       "</ul>";
@@ -150,23 +152,24 @@ function launchAnimation(e) {
 function addFilteringFunction(e) {
   for (let t = 0; t < e.length; t++)
     e.item(t).addEventListener("click", function () {
-      let l = e[t].dataset.tag;
+      let a = e[t].dataset.tag;
       removeAnimation(document.getElementsByClassName("gallery-items-row")[0]),
-        filterImages(l);
+        filterImages(a);
     });
 }
 function filterImages(e) {
   let t = document.getElementsByClassName("item-column");
-  for (let l of (document
-    .querySelector(".nav-link.active")
-    .classList.remove("active"),
+  for (let a of ((document.querySelector(".nav-link.active").ariaSelected =
+    "false"),
+  document.querySelector(".nav-link.active").classList.remove("active"),
   document.querySelector(`span[data-tag="${e}"]`).classList.add("active"),
+  (document.querySelector(`span[data-tag="${e}"]`).ariaSelected = "true"),
   t))
     "Tous" !== e
-      ? l.firstChild.dataset.tag == e
-        ? (l.style.display = "flex")
-        : l.firstChild.dataset.tag !== e && (l.style.display = "none")
-      : (l.style.display = "flex");
+      ? a.firstChild.dataset.tag == e
+        ? (a.style.display = "flex")
+        : a.firstChild.dataset.tag !== e && (a.style.display = "none")
+      : (a.style.display = "flex");
   launchAnimation(document.getElementsByClassName("gallery-items-row")[0]);
 }
 function addListenerLightBox(e) {
