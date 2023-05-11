@@ -450,11 +450,11 @@ function displayAllTags(location, showTags, IMAGE_GALLERY) {
 
   // Build the hmtl list of the tags as it will be displayed using map() function
   const returnTagList =
-    '<ul class="my-4 tags-bar nav nav-pills" role="tablist"><li class="nav-item active" role="tablist"><span class="nav-link active" data-tag="Tous" aria-selected="true" tabindex="0" aria-label="Afficher toutes les images">Tous</span></li>' +
+    '<ul class="my-4 tags-bar nav nav-pills" role="tablist"><li class="nav-item active" role="tab"><span class="nav-link active" data-tag="Tous" aria-selected="true" tabindex="0" aria-label="Afficher toutes les images">Tous</span></li>' +
     tagsCollectionArray
       .map(
-        (tagsCollectionArray, index) => `
-      <li class="nav-item">
+        (tagsCollectionArray) => `
+      <li class="nav-item" role="tab">
       <span class="nav-link" aria-selected="false" tabindex="0"data-tag="${tagsCollectionArray}" aria-label="Afficher les images ${tagsCollectionArray}">${tagsCollectionArray}</span></li>`
       )
       .join("") +
