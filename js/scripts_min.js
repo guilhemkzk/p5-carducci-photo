@@ -124,14 +124,12 @@ function addBootstrapClasses(e, t) {
 function displayAllTags(e, t, a) {
   let l = a.uniqueTags,
     s =
-      '<ul class="my-4 tags-bar nav nav-pills"><li class="nav-item active"><span class="nav-link active" data-tag="Tous" aria-selected="true" tabindex="11">Tous</span></li>' +
+      '<ul class="my-4 tags-bar nav nav-pills" role="tablist"><li class="nav-item active" role="tablist"><span class="nav-link active" data-tag="Tous" aria-selected="true" tabindex="0" aria-label="Afficher toutes les images">Tous</span></li>' +
       l
         .map(
           (e, t) => `
       <li class="nav-item">
-      <span class="nav-link" aria-selected="false" tabindex="${
-        t + 11
-      }"data-tag="${e}">${e}</span></li>`
+      <span class="nav-link" aria-selected="false" tabindex="0"data-tag="${e}" aria-label="Afficher les images ${e}">${e}</span></li>`
         )
         .join("") +
       "</ul>";
