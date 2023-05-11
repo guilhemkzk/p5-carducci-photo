@@ -450,12 +450,14 @@ function displayAllTags(location, showTags, IMAGE_GALLERY) {
 
   // Build the hmtl list of the tags as it will be displayed using map() function
   const returnTagList =
-    '<ul class="my-4 tags-bar nav nav-pills"><li class="nav-item active"><span class="nav-link active" data-tag="Tous">Tous</span></li>' +
+    '<ul class="my-4 tags-bar nav nav-pills"><li class="nav-item active"><span class="nav-link active" data-tag="Tous" aria-selected="true" tabindex="11">Tous</span></li>' +
     tagsCollectionArray
       .map(
-        (tagsCollectionArray) => `
+        (tagsCollectionArray, index) => `
       <li class="nav-item">
-      <span class="nav-link" data-tag="${tagsCollectionArray}">${tagsCollectionArray}</span></li>`
+      <span class="nav-link" aria-selected="false" tabindex="${
+        index + 11
+      }"data-tag="${tagsCollectionArray}">${tagsCollectionArray}</span></li>`
       )
       .join("") +
     "</ul>";
@@ -541,6 +543,8 @@ function filterImages(selectedTag) {
   let individualsImagesContainers =
     document.getElementsByClassName("item-column");
 
+  // Get all the tags and change aria selected true value to false
+  document.querySelector(".nav-link.active").ariaSelected = "false";
   // Get all the tags and remove all previous active classes
   document.querySelector(".nav-link.active").classList.remove("active");
 
@@ -548,6 +552,9 @@ function filterImages(selectedTag) {
   document
     .querySelector(`span[data-tag="${selectedTag}"]`)
     .classList.add("active");
+  // Get the present tag and add the aria selected true to it
+  document.querySelector(`span[data-tag="${selectedTag}"]`).ariaSelected =
+    "true";
 
   // Loop in the imagesInGallery to hide the ones that does not match the tag
   for (let item of individualsImagesContainers) {
