@@ -66,9 +66,9 @@
     <script src="./assets/bootstrap/bootstrap.bundle.min.js" defer></script>
     <script type="text/javascript" src="./js/scripts_min.js" defer></script>
   </head>
-  <body>
+  <body itemscope itemtype="http://schema.org/LocalBusiness">
     <div class="top-header">
-      <h1 class="name">Nina Carducci</h1>
+      <h1 class="name" itemprop="name">Nina Carducci</h1>
       <div class="nav">
         <ul>
           <li>
@@ -187,6 +187,7 @@
           src="./assets/images/nina.webp"
           alt="Photographie Portrait Photographe Profesionnel"
           aria-label="Portrait de Nina Carducci, photographe professionnelle"
+          itemprop="image"
         />
       </div>
       <div id="about-me">
@@ -381,7 +382,7 @@
           <h2>Une question ? Une demande de devis ?</h2>
 
           <!-- Rich Snippet Google -->
-          <div itemscope itemtype="http://schema.org/LocalBusiness">
+          <div>
             <p>
               <time itemprop="openingHours" datetime="Mo-Fi 09:00-19:00"
                 >Horaires : Lundi au Vendredi de 9h à 17h</time
