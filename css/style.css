@@ -104,6 +104,12 @@ body {
   animation-fill-mode: forwards;
 }
 
+.carousel-inner {
+  height: 690px;
+  width: 100%;
+  box-sizing: content-box;
+}
+
 @keyframes expand {
   from {
     width: 0;
@@ -340,6 +346,12 @@ input[type="submit"] {
   #contact .container {
     align-items: center;
   }
+
+  .carousel-inner {
+    height: 552px;
+    width: 100%;
+  }
+
   .about-me__title {
     margin-top: 0;
     margin-bottom: 1em;
@@ -356,6 +368,11 @@ input[type="submit"] {
   }
   .picture {
     width: 50%;
+  }
+
+  .carousel-inner {
+    height: 460px;
+    width: 100%;
   }
 
   .picture img {
@@ -434,6 +451,11 @@ input[type="submit"] {
   .picture.left::before,
   .picture.right::before {
     height: 150px;
+  }
+
+  .carousel-inner {
+    height: 300px;
+    width: 100%;
   }
 
   .picture img {
