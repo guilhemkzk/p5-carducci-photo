@@ -153,6 +153,10 @@ form textarea {
   border: 1px solid;
   margin-bottom: 20px;
 }
+.item-column img,
+.nav-link:hover {
+  cursor: pointer;
+}
 .item-column {
   margin-bottom: 0 !important;
   padding: 0;
